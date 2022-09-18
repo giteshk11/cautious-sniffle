@@ -11,11 +11,14 @@
   },
   "dependencies": {
     "@codemirror/lang-sql": "^6.3.0",
+    "@headlessui/vue": "^1.7.2",
     "codemirror": "^6.0.1",
-    "vue": "^3.2.38"
+    "vue": "^3.2.38",
+    "vue-codemirror": "^6.1.1"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.4",
+    "@tailwindcss/forms": "^0.5.3",
     "@types/node": "^16.11.56",
     "@vitejs/plugin-vue": "^3.0.3",
     "@vue/eslint-config-prettier": "^7.0.0",
