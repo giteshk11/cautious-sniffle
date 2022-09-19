@@ -59,13 +59,14 @@ import {
   queryTypes,
   tables,
   logicalOperators,
-} from "@/utils/constats";
+} from "@/utils/constants";
 import { ref, computed } from "vue";
 import IconButton from "./IconButton.vue";
 import TextInput from "./TextInput.vue";
 import TheDropdown from "./TheDropdown.vue";
 
-const emit = defineEmits(["queryChanges"]);
+const emit = defineEmits(["queryChanged"]);
+const whereClicked = ref(false);
 const defaultQueries: any = {
   selectedQuery: ref(queryTypes[0]),
   selectedTable: ref(tables[0]),
@@ -75,15 +76,10 @@ const defaultQueries: any = {
   whereValue: ref(""),
 };
 
-const whereClicked = ref(false);
-
-const formMapper: any = {};
-
 const defaultColumns = computed((): any => {
-  return columns.filter((c) => {
-    console.log(whereClicked.value ? c.id !== "ALL" : c.id === "ALL");
-    return c.belongsTo.includes(defaultQueries.selectedTable.value.id);
-  });
+  return columns.filter((c) =>
+    c.belongsTo.includes(defaultQueries.selectedTable.value.id)
+  );
 });
 
 const sqlFormBuilder: any = ref([
@@ -115,47 +111,77 @@ const sqlFormBuilder: any = ref([
   },
 ]);
 
+emitQuery();
+
 function onAddClicked() {
   if (!whereClicked.value) {
-    sqlFormBuilder.value.push({
-      label: "Where",
-      component: "div",
-      class: "label-from mt-[1.5rem]",
-    });
-    sqlFormBuilder.value.push({
-      label: "Where Columns",
-      options: defaultColumns,
-      modelValue: defaultQueries.whereColumn,
-      component: TheDropdown,
-      changeEvent: ($event: any) => queryChanged($event, "whereColumn"),
-    });
-    sqlFormBuilder.value.push({
-      label: "Logical Operators",
-      options: logicalOperators,
-      modelValue: defaultQueries.selectedLogic,
-      component: TheDropdown,
-      changeEvent: ($event: any) => queryChanged($event, "selectedLogic"),
-    });
-    sqlFormBuilder.value.push({
-      label: "Value",
-      modelValue: defaultQueries.whereValue,
-      component: TextInput,
-      class: "mt-[1.5rem]",
-      changeEvent: ($event: any) => queryChanged($event, "whereValue"),
-    });
+    sqlFormBuilder.value.push(
+      {
+        label: "Where",
+        component: "div",
+        class: "label-from mt-[1.5rem]",
+      },
+      {
+        label: "Where Columns",
+        options: defaultColumns,
+        modelValue: defaultQueries.whereColumn,
+        component: TheDropdown,
+        changeEvent: ($event: any) => queryChanged($event, "whereColumn"),
+      },
+      {
+        label: "Logical Operators",
+        options: logicalOperators,
+        modelValue: defaultQueries.selectedLogic,
+        component: TheDropdown,
+        changeEvent: ($event: any) => queryChanged($event, "selectedLogic"),
+      },
+      {
+        label: "Value",
+        modelValue: defaultQueries.whereValue,
+        component: TextInput,
+        class: "mt-[1.5rem]",
+        changeEvent: ($event: any) => queryChanged($event, "whereValue"),
+      }
+    );
   } else {
     sqlFormBuilder.value.splice(-4);
   }
   whereClicked.value = !whereClicked.value;
+  emitQuery();
+}
+
+emitQuery();
+
+function emitQuery() {
+  const {
+    selectedQuery: {
+      value: { id: selectedQuery },
+    },
+    selectedColumn: {
+      value: { id: selectedColumn },
+    },
+    selectedTable: {
+      value: { id: selectedTable },
+    },
+    whereColumn: {
+      value: { id: whereColumn },
+    },
+    selectedLogic: {
+      value: { id: selectedLogic },
+    },
+    whereValue: { value: whereValue },
+  } = defaultQueries;
+  let generatedQuery = `${selectedQuery} ${selectedColumn} FROM ${selectedTable}`;
+  if (whereClicked.value) {
+    generatedQuery += ` WHERE ${whereColumn} ${selectedLogic} ${whereValue}`;
+  }
+  console.log(generatedQuery);
+  emit("queryChanged", generatedQuery);
 }
 
 function queryChanged(value: Columns, type: string) {
+  console.log(value);
   defaultQueries[type].value = value;
-  formMapper[type] = value;
-  console.log(defaultQueries);
-  emit(
-    "queryChanges"
-    // `${selectedQuery.value} ${selectedColumn.value} FROM ${selectedTable.value}`
-  );
+  emitQuery();
 }
 </script>

@@ -11,8 +11,8 @@
   </tr>
   <tr v-for="(row, i) in rows" :key="i" v-else class="divide-x divide-gray-200">
     <td
-      v-for="(data, i) in row"
-      :key="i"
+      v-for="(data, j) in row"
+      :key="j"
       scope="col"
       class="whitespace-nowrap px-3 py-2 text-sm text-gray-500"
     >
@@ -23,12 +23,12 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from "vue";
-import type { Columns, Customers } from "@/types";
+import type { Columns, Customers, Orders, Shippings } from "@/types";
 
 export default defineComponent({
   props: {
     rows: {
-      type: Object as PropType<Customers[]>,
+      type: Object as PropType<Customers[] | Orders[] | Shippings[]>,
     },
     columns: {
       type: Object as PropType<Columns[]>,

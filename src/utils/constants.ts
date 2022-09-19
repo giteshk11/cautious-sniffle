@@ -10,15 +10,15 @@ export const columns = [
   { belongsTo: "ORDERS", id: "order_id", name: "Order Id" },
   { belongsTo: "ORDERS", id: "item", name: "Item" },
   { belongsTo: "ORDERS", id: "amount", name: "Amount" },
-  { belongsTo: "SHIPPING", id: "shipping_id", name: "Shipping Id" },
-  { belongsTo: "SHIPPING", id: "status", name: "Status" },
-  { belongsTo: "SHIPPING", id: "customer_id", name: "Customer Id" },
+  { belongsTo: "SHIPPINGS", id: "shipping_id", name: "Shipping Id" },
+  { belongsTo: "SHIPPINGS", id: "status", name: "Status" },
+  { belongsTo: "SHIPPINGS", id: "customer_id", name: "Customer Id" },
 ];
 
 export const tables = [
   { id: "CUSTOMERS", name: "Customers" },
   { id: "ORDERS", name: "Orders" },
-  { id: "SHIPPING", name: "Shipping" },
+  { id: "SHIPPINGS", name: "Shipping" },
 ];
 
 export const logicalOperators = [
