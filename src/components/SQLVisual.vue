@@ -60,12 +60,12 @@ import {
   tables,
   logicalOperators,
 } from "@/utils/constants";
+
 import { ref, computed } from "vue";
 import IconButton from "./IconButton.vue";
 import TextInput from "./TextInput.vue";
 import TheDropdown from "./TheDropdown.vue";
 
-const emit = defineEmits(["queryChanged"]);
 const whereClicked = ref(false);
 const defaultQueries: any = {
   selectedQuery: ref(queryTypes[0]),
@@ -75,6 +75,8 @@ const defaultQueries: any = {
   whereColumn: ref(columns[0]),
   whereValue: ref(""),
 };
+
+const emit = defineEmits(["queryChanged"]);
 
 const defaultColumns = computed((): any => {
   return columns.filter((c) =>
