@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex px-6 py-4 items-baseline gap-x-4 h-[10%]">
+  <nav class="flex px-6 py-4 items-baseline gap-x-4 bg-slate-100">
     <h2>SQL Query Runner</h2>
     <ul class="flex items-center">
       <li>
@@ -11,7 +11,7 @@
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-5 h-5 text-green-500 fill-current"
+            class="w-5 h-5 text-green-500 fill-current mt-0.5"
           >
             <path
               stroke-linecap="round"

@@ -15,8 +15,6 @@ export function executeQuery(query: string) {
     whereValue,
   ] = query.split(" ");
 
-  console.log(query);
-
   let rows: Customers[] | Shippings[] | Orders[] = [];
   if (table.includes("CUSTOMERS")) {
     rows = customers;
@@ -30,7 +28,7 @@ export function executeQuery(query: string) {
     filteredColumns = filteredColumns.filter((col) => col.id === selectedCol);
     rows = rows.map((row: any) => ({ [selectedCol]: row[selectedCol] }));
   }
-  console.log(filteredColumns, rows);
+
   // if (whereSelected) {
   //   rows = rows.map((row: any) => ({ [selectedCol]: row[selectedCol] }));
   // }

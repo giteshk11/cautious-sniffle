@@ -175,12 +175,11 @@ function emitQuery() {
   if (whereClicked.value) {
     generatedQuery += ` WHERE ${whereColumn} ${selectedLogic} ${whereValue}`;
   }
-  console.log(generatedQuery);
+
   emit("queryChanged", generatedQuery);
 }
 
 function queryChanged(value: Columns, type: string) {
-  console.log(value);
   defaultQueries[type].value = value;
   emitQuery();
 }

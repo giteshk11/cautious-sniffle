@@ -2,6 +2,7 @@ export interface Columns {
   belongsTo: string;
   id: string;
   name: string;
+  type?: string;
 }
 
 export interface Customers {

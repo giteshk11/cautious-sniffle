@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between gap-x-4">
+  <div class="flex justify-around gap-x-10">
     <codemirror
       v-model="code"
       placeholder="Code goes here..."

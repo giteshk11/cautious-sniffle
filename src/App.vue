@@ -2,6 +2,8 @@
 import { computed, ref, watch } from "vue";
 import type { Columns, Customers, Orders, Shippings, Tab } from "./types";
 import * as Helpers from "./utils/helpers";
+import { columns as TableCols } from "./utils/constants";
+import TableIcon from "./assets/table.svg?raw";
 
 import TheHeaderVue from "./components/TheHeader.vue";
 import TabSelector from "./components/TabSelector.vue";
@@ -37,22 +39,59 @@ function runQuery() {
   columns.value = currentColumns;
 }
 
+const tableSchema = (): [Columns[]] => {
+  return Object.values(
+    TableCols.reduce((acc: any, item: any) => {
+      if (item.id !== "ALL") {
+        acc[item.belongsTo] = [...(acc[item.belongsTo] || []), item];
+      }
+      return acc;
+    }, {})
+  );
+};
+
 watch(switchTabsView, () => {
   rows.value = undefined;
   columns.value = undefined;
+  query.value = "SELECT * FROM CUSTOMERS;";
 });
 </script>
 
 <template>
   <div class="h-full">
     <TheHeaderVue @clicked="runQuery" />
-    <div class="w-4/5 mx-auto space-y-4 px-6">
+    <div class="space-y-4 mx-12">
       <TabSelector :tabs="tabs" @clicked="changeTabFocus" />
-      <div v-show="switchTabsView == 'Visual'">
-        <SQLVisual @query-changed="(newValue: string) => (query = newValue)" />
-      </div>
-      <div v-show="switchTabsView == 'Editor'">
-        <SQLEditor @code-changed="(newValue: string) => (query = newValue)" />
+      <div
+        class="grid grid-cols-2 w-full"
+        style="grid-template-columns: 1fr 0.2fr"
+      >
+        <div v-show="switchTabsView == 'Visual'">
+          <SQLVisual
+            @query-changed="(newValue: string) => (query = newValue)"
+          />
+        </div>
+        <div v-show="switchTabsView == 'Editor'" class="w-full">
+          <SQLEditor @code-changed="(newValue: string) => (query = newValue)" />
+        </div>
+        <div class="place-self-end">
+          <template v-for="(schema, i) in tableSchema()" :key="i">
+            <div class="flex items-end gap-x-1 border-b-[1.5px]">
+              <span v-html="TableIcon" />
+              <p class="text-sm">{{ schema[i].belongsTo }}</p>
+            </div>
+            <ul class="mb-4">
+              <li
+                v-for="(col, j) in schema"
+                :key="j"
+                class="text-xs space-x-1.5"
+              >
+                <span>{{ col.name }}</span>
+                <span class="text-blue-500">{{ col.type }}</span>
+              </li>
+            </ul>
+          </template>
+        </div>
       </div>
       <div v-if="rows?.length">
         <DataTable :columns="columns" :rowData="rows" />
