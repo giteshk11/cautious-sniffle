@@ -39,7 +39,7 @@ function runQuery() {
   columns.value = currentColumns;
 }
 
-const tableSchema = (): [Columns[]] => {
+const tableSchema = (): Columns[][] => {
   return Object.values(
     TableCols.reduce((acc: any, item: any) => {
       if (item.id !== "ALL") {
