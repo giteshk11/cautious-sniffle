@@ -28,11 +28,17 @@ Also, there's a database schema information chart on right side which shows the 
 ## Application load time
 
 - Overall performance score 95/100
-  `First contentful paint (FCP)`: 0.81 s
-  `Largest contentful paint (LCP)`: 0.92 s
-  `Total size`: 0.5MB (HTML size: 0.4 KB, JS Size: 454.2 KB, CSS size: 14.5 KB)
+  
+  - `First contentful paint (FCP)`: 0.81 s
+  
+  - `Largest contentful paint (LCP)`: 0.92 s
+  
+  - `Total size`: 0.5MB (HTML size: 0.4 KB, JS Size: 454.2 KB, CSS size: 14.5 KB)
 
-- Metrics used for measuring the load time: First contentful paint ( FCP ), Largest contentful paint ( LCP ), Size of resources i.e. HTML, CSS, JS & other assets.
+- Metrics used for measuring the load time: 
+    - First contentful paint ( FCP )
+    - Largest contentful paint ( LCP )
+    - Size of resources i.e. HTML, CSS, JS & other assets.
 
 - Measured using BrowserStack's Speedlab Tool which runs tests on real devices and can run tests on mutiple devices.
 
