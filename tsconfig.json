@@ -6,7 +6,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "lib": ["es2015", "es2017.object", "dom"]
+    "lib": ["es2015", "es2017", "dom"]
   },
 
   "references": [
