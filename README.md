@@ -10,13 +10,27 @@ SQL runner is a web-based application that can be used to run and displaying the
 There are two ways in which a user can entry queries
 
 1.  **Visual**: Using this option a user can explore the data without having the knowledge of SQL.
+
     ![visual](screenshots/Screenshot%202022-09-20%20at%2010.37.30%20PM.png)
     ![visual](screenshots/Screenshot%202022-09-20%20at%2010.37.36%20PM.png)
+    
 2.  **Editor**: Using this option a user can explore data using advance syntax like JOINS, GROUPS, etc.
     ![Editor](screenshots/Screenshot%202022-09-20%20at%2011.19.47%20PM.png)
 
 Also, there's a database schema information chart on right side which shows the table structure of the available tables.
+
 ![schema](screenshots/Screenshot%202022-09-20%20at%2011.21.34%20PM.png)
+
+## How to use
+### Visual Editor:
+    1. Click on any of the dropdowns to change the query to get desired results.
+    2. Click on run button on the top to execute the query.
+    3. A table should be visible with the results
+    
+### Code Editor:
+    1. You can use pre-defined queries available or write in code editor.
+    2. Hit the run button to execute the query.
+    3. A table should be visible with the results.
 
 ## Framework/Packages used
 
