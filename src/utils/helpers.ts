@@ -15,23 +15,41 @@ export function executeQuery(query: string) {
     whereValue,
   ] = query.split(" ");
 
+  console.log(query.split(" "));
+
   let rows: Customers[] | Shippings[] | Orders[] = [];
-  if (table.includes("CUSTOMERS")) {
+  if (table?.includes("CUSTOMERS")) {
     rows = customers;
-  } else if (table.includes("ORDERS")) {
+  } else if (table?.includes("ORDERS")) {
     rows = orders;
-  } else if (table.includes("SHIPPINGS")) {
+  } else if (table?.includes("SHIPPINGS")) {
     rows = shippings;
+  } else {
+    rows = customers;
   }
-  let filteredColumns = columns.filter((tc) => table.includes(tc.belongsTo));
+
+  /**
+   * Returning columns for the table selected in query
+   */
+  let filteredColumns = columns.filter((tc) => table?.includes(tc.belongsTo));
+
+  /**
+   *  Filtering data based on column selected for a particular table.
+   */
+
   if (!["ALL", "*"].includes(selectedCol)) {
     filteredColumns = filteredColumns.filter((col) => col.id === selectedCol);
     rows = rows.map((row: any) => ({ [selectedCol]: row[selectedCol] }));
   }
 
-  // if (whereSelected) {
-  //   rows = rows.map((row: any) => ({ [selectedCol]: row[selectedCol] }));
-  // }
+  /**
+   *  If not table found return default data.
+   */
+
+  if (!filteredColumns.length) {
+    filteredColumns = columns.filter((tc) => tc.belongsTo === "CUSTOMERS");
+  }
+
   return {
     rows,
     columns: filteredColumns,
